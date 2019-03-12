@@ -39,11 +39,13 @@ public class FxCanvasExample1 extends Application {
         Scene scene = new Scene(root);
 
         writePixels(gc,xpos,ypos, 50,50);
-
-        Thread thread = new Thread(new Runnable() {
+        /*
+        Thread thread = new Thread(new Runnable()
+        {
             @Override
             public void run() {
-                Runnable updater = new Runnable() {
+                Runnable updater = new Runnable()
+                {
                     @Override
                     public void run() {
                         gc.clearRect(0, 0, 400, 400);
@@ -51,43 +53,48 @@ public class FxCanvasExample1 extends Application {
                         System.out.println("runnable " + counter);
                     }
                 };
-                while (sc.hasNextLine()) {
-                    switch(sc.nextLine()){
-                        case "UP":
-                            counter++;
-                            System.out.println("next line " + counter);
-                            xpos += 0;
-                            ypos -= 10;
-                            Platform.runLater(updater);
-                            break;
-                        case "DOWN":
-                            counter++;
-                            System.out.println("next line " + counter);
-                            xpos += 0;
-                            ypos += 10;
-                            Platform.runLater(updater);
-                            break;
-                        case "LEFT":
-                            counter++;
-                            System.out.println("next line " + counter);
-                            xpos -= 10;
-                            ypos += 0;
-                            Platform.runLater(updater);
-                            break;
-                        case "RIGHT":
-                            counter++;
-                            System.out.println("next line " + counter);
-                            xpos += 10;
-                            ypos += 0;
-                            Platform.runLater(updater);
-                            break;
-                        default:
-                            System.out.println("Case Done");
-                    }
+         */
+        Thread thread = new Thread(() -> {
+            Runnable updater = () -> {
+                gc.clearRect(0, 0, 400, 400);
+                writePixels(gc,xpos,ypos, 50,50);
+                System.out.println("runnable " + counter);
+            };
+            while (sc.hasNextLine()) {
+                switch(sc.nextLine()){
+                    case "UP":
+                        counter++;
+                        System.out.println("next line " + counter);
+                        xpos += 0;
+                        ypos -= 10;
+                        Platform.runLater(updater);
+                        break;
+                    case "DOWN":
+                        counter++;
+                        System.out.println("next line " + counter);
+                        xpos += 0;
+                        ypos += 10;
+                        Platform.runLater(updater);
+                        break;
+                    case "LEFT":
+                        counter++;
+                        System.out.println("next line " + counter);
+                        xpos -= 10;
+                        ypos += 0;
+                        Platform.runLater(updater);
+                        break;
+                    case "RIGHT":
+                        counter++;
+                        System.out.println("next line " + counter);
+                        xpos += 10;
+                        ypos += 0;
+                        Platform.runLater(updater);
+                        break;
+                    default:
+                        System.out.println("Case Done");
                 }
             }
         });
-
         thread.setDaemon(true);
         thread.start();
 
@@ -98,12 +105,10 @@ public class FxCanvasExample1 extends Application {
     }
 
     private void writePixels(GraphicsContext gc, int xpos, int ypos, int pixelHeight, int pixelWidth) {
-
         byte[] pixels = new byte[pixelWidth * pixelHeight / 2];
-
         PixelWriter pixelWriter = gc.getPixelWriter();
-
         PixelFormat<ByteBuffer> pixelFormat = PixelFormat.getByteRgbInstance();
+
         if (pixelHeight >= 10 && pixelWidth >= 10) {
             pixelWriter.setPixels(xpos, ypos, pixelWidth, pixelHeight,
                     pixelFormat, pixels, 0, 0);
