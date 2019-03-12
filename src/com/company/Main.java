@@ -13,7 +13,7 @@ import javafx.stage.Stage;
 import java.nio.ByteBuffer;
 import java.util.Scanner;
 
-public class FxCanvasExample1 extends Application {
+public class Main extends Application {
     Scanner sc = new Scanner(System.in);
 
     int counter = 0;
@@ -54,7 +54,6 @@ public class FxCanvasExample1 extends Application {
                     }
                 };
          */
-        //
         Thread thread = new Thread(() -> {
             Runnable updater = () -> {
                 gc.clearRect(0, 0, 400, 400);
