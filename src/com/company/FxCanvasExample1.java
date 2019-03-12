@@ -54,6 +54,7 @@ public class FxCanvasExample1 extends Application {
                     }
                 };
          */
+        //
         Thread thread = new Thread(() -> {
             Runnable updater = () -> {
                 gc.clearRect(0, 0, 400, 400);
